@@ -1,51 +1,109 @@
 <template>
-  <div class="page-header clear-filter" filter-color="orange">
+  <div class="page-header clear-filter" filter-color="dark">
     <div
       class="page-header-image"
       style="background-image: url('img/login.jpg')"
     ></div>
     <div class="content">
       <div class="container">
-        <div class="col-md-5 ml-auto mr-auto">
-          <card type="login" plain>
-            <div slot="header" class="logo-container">
-              <img v-lazy="'img/now-logo.png'" alt="" />
+        <div class="row">
+          <div class="col-md-7">
+            <div class="text-left text-white" style="margin-top: 18%;">
+              <h1 class="mb-1">
+                Modern, Intelligent <br />Diabetes Diagnosis Tool
+              </h1>
+              <p>
+                Built for the Medics, Get high accuracy diabetes diagnosis on
+                patient's data.
+              </p>
+              <p class="mt-5">
+                <a href="#" class="text-white"
+                  >Learn More
+                  <span class="fa fa-arrow-down larrow"></span>
+                </a>
+              </p>
             </div>
+          </div>
+          <div class="col-md-5">
+            <div class="card ncardbody text-left">
+              <div class="card-body">
+                <div class="formins">
+                  <h5 class="trackcamp">Create Account</h5>
+                  <div class="mt-4">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group cardform">
+                          <label for="fname">First Name</label>
+                          <input
+                            type="text"
+                            id="fname"
+                            value=""
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group cardform">
+                          <label for="lname">Last Name</label>
+                          <input
+                            type="text"
+                            id="lname"
+                            value=""
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group cardform">
+                      <label for="email">Email address</label>
+                      <input
+                        type="email"
+                        id="email"
+                        value=""
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group cardform mt-1">
+                          <label for="password">Password</label>
+                          <input
+                            type="password"
+                            id="password"
+                            value=""
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group cardform mt-1">
+                          <label for="confirmPassword">Confirm Password</label>
+                          <input
+                            type="password"
+                            id="confirmPassword"
+                            value=""
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                    </div>
 
-            <fg-input
-              class="no-border input-lg"
-              addon-left-icon="now-ui-icons users_circle-08"
-              placeholder="First Name..."
-            >
-            </fg-input>
-
-            <fg-input
-              class="no-border input-lg"
-              addon-left-icon="now-ui-icons text_caps-small"
-              placeholder="Last Name..."
-            >
-            </fg-input>
-
-            <template slot="raw-content">
-              <div class="card-footer text-center">
-                <a
-                  href="#pablo"
-                  class="btn btn-primary btn-round btn-lg btn-block"
-                  >Get Started</a
-                >
+                    <div class="form-group mt-3">
+                      <button type="submit" class="btn btn-cust btn-block">
+                        Create Account
+                      </button>
+                    </div>
+                    <div class="small mt-4">
+                      <p>
+                        Already have an account?
+                        <a href="#" class="text-theme">Login here</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="pull-left">
-                <h6>
-                  <a href="#pablo" class="link footer-link">Create Account</a>
-                </h6>
-              </div>
-              <div class="pull-right">
-                <h6>
-                  <a href="#pablo" class="link footer-link">Need Help?</a>
-                </h6>
-              </div>
-            </template>
-          </card>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -68,4 +126,5 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '../assets/scss/main.scss';
+@import '../assets/scss/landing.scss';
 </style>

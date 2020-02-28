@@ -4,38 +4,11 @@
     :class="{ [`footer-${type}`]: type }"
     :data-background-color="backgroundColor"
   >
-    <div class="container">
-      <nav>
-        <ul>
-          <li>
-            <a href="https://www.creative-tim.com">
-              Creative Tim
-            </a>
-          </li>
-          <li>
-            <a href="https:///presentation.creative-tim.com">
-              About Us
-            </a>
-          </li>
-          <li>
-            <a href="https:///blog.creative-tim.com">
-              Blog
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="copyright">
-        &copy; {{ year }}, Designed by
-        <a href="https:///www.invisionapp.com" target="_blank" rel="noopener"
-          >Invision</a
-        >. Coded by
-        <a href="https://binarcode.com" target="_blank" rel="noopener"
-          >BinarCode</a
-        >
-        and
-        <a href="https://www.creative-tim.com" target="_blank" rel="noopener"
-          >Creative Tim</a
-        >.
+    <div class=" container">
+      <div class="copyright float-left" id="copyright">
+        ©
+        <span>{{ currYear }}</span>
+        Diab.Predict Technologies
       </div>
     </div>
   </footer>
@@ -48,8 +21,13 @@ export default {
   },
   data() {
     return {
+      currYear: '',
       year: new Date().getFullYear()
     };
+  },
+  mounted() {
+    this.currYear = new Date().getFullYear();
+    console.log(this.currYear);
   }
 };
 </script>

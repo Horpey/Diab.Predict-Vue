@@ -4,7 +4,7 @@
     :class="{ [`footer-${type}`]: type }"
     :data-background-color="backgroundColor"
   >
-    <div class=" container">
+    <div class="container">
       <div class="copyright float-left" id="copyright">
         ©
         <span>{{ currYear }}</span>
@@ -21,13 +21,12 @@ export default {
   },
   data() {
     return {
-      currYear: '',
+      currYear: "",
       year: new Date().getFullYear()
     };
   },
   mounted() {
     this.currYear = new Date().getFullYear();
-    console.log(this.currYear);
   }
 };
 </script>

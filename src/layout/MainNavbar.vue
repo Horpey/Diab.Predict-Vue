@@ -4,9 +4,9 @@
   >
     <div class="container">
       <div class="navbar-translate">
-        <a class="navbar-brand" href="#">
+        <router-link class="navbar-brand" to="/">
           Diab.Predict
-        </a>
+        </router-link>
         <button
           class="navbar-toggler navbar-toggler"
           type="button"
@@ -28,29 +28,21 @@
       >
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
+            <router-link class="nav-link" to="/">Home</router-link>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="ontology.html"
-              rel="tooltip"
-              title=""
-              data-placement="bottom"
-              data-original-title="Diabetes Domain Knowledge"
-              >Ontology</a
-            >
+            <router-link class="nav-link" to="/ontology">Ontology</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
+            <router-link class="nav-link" to="/about">About</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="help.com">Help</a>
+            <router-link class="nav-link" to="/help">Help</router-link>
           </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact us</a>
+            <router-link class="nav-link" to="/contact">Contact us</router-link>
           </li>
         </ul>
       </div>

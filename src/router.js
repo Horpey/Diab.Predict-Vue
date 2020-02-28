@@ -27,7 +27,7 @@ export default new Router({
       props: {
         header: {
           colorOnScroll: 400,
-          style: 'background-color: black!important'
+          style: 'background-color: #2c2c2c!important'
         },
         footer: { backgroundColor: 'black' }
       }

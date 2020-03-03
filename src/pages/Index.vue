@@ -26,7 +26,7 @@
           <div class="col-md-5">
             <div class="card ncardbody text-left">
               <div class="card-body">
-                <div class="formins">
+                <div v-if="!loginCond" class="formins">
                   <h5 class="trackcamp">Create Account</h5>
                   <div class="mt-4">
                     <div class="row">
@@ -68,7 +68,43 @@
                     <div class="small mt-4">
                       <p>
                         Already have an account?
-                        <a href="#" class="text-theme">Login here</a>
+                        <a
+                          href="#"
+                          @click="login"
+                          class="text-theme"
+                        >Login here</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div v-if="loginCond" class="formins">
+                  <h5 class="trackcamp">Login Here</h5>
+                  <div class="mt-4">
+                    <div class="form-group cardform">
+                      <label for="email">Email address</label>
+                      <input type="email" id="email" value class="form-control" />
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group cardform mt-1">
+                          <label for="password">Password</label>
+                          <input type="password" id="password" value class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                      <button type="submit" class="btn btn-cust btn-block">Login</button>
+                    </div>
+                    <div class="small mt-4">
+                      <p>
+                        Don't have an account?
+                        <a
+                          href="#"
+                          @click="login"
+                          class="text-theme"
+                        >Create account</a>
                       </p>
                     </div>
                   </div>
@@ -93,6 +129,16 @@ export default {
     MainFooter,
     [Button.name]: Button,
     [FormGroupInput.name]: FormGroupInput
+  },
+  data() {
+    return {
+      loginCond: false
+    };
+  },
+  methods: {
+    login() {
+      this.loginCond = !this.loginCond;
+    }
   }
 };
 </script>

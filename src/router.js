@@ -5,6 +5,9 @@ import Ontology from './pages/Ontology.vue';
 import MainNavbar from './layout/MainNavbar.vue';
 import MainFooter from './layout/MainFooter.vue';
 
+// Dashboard
+import Dashboard from './pages/dashboard/Dashboard.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -31,6 +34,13 @@ export default new Router({
         },
         footer: { backgroundColor: 'black' }
       }
+    },
+    // dashboard
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      components: { default: Dashboard }
+      // components: { default: Ontology, header: MainNavbar, footer: MainFooter },
     }
   ],
   scrollBehavior: to => {

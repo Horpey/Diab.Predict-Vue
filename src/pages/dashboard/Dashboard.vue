@@ -1,195 +1,38 @@
 <template>
   <div>
     <div class="wrapper">
-      <!-- <sidebar /> -->
+      <sidebar />
       <div class="main-panel" id="main-panel">
         <div class="content pt-3">
-          <div class>
-            <div class="row">
-              <div class="col-md-6">
-                <h3 class="text-capitalize font-weight-bold">Hi Adeniran!</h3>
-              </div>
-              <div class="col-md-6">
-                <div class="text-right">
-                  <button
-                    type="button"
-                    class="btn btn-theme"
-                    data-toggle="modal"
-                    data-target="#modelId"
-                  >
-                    <span class="fa fa-user mr-2"></span>
-                    Add Patient
-                  </button>
-                  <a class="btn btn-dark-sm">
-                    Logout
-                    <span class="fas fa-sign-out-alt ml-2"></span>
-                  </a>
-                </div>
-              </div>
+          <div class="row">
+            <div class="col-md-6">
+              <h3 class="text-capitalize font-weight-bold">Hi Adeniran!</h3>
             </div>
-            <div>
-              <div class="mt-2">
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-3">
-                            <h3 class="mb-0 mt-2 text-theme">
-                              <span class="fa fa-users"></span>
-                            </h3>
-                          </div>
-                          <div class="col-9">
-                            <p class="mb-0">Patients</p>
-                            <h4 class="my-0">24</h4>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-3">
-                            <h3 class="mb-0 mt-2 text-theme">
-                              <span class="fa fa-users"></span>
-                            </h3>
-                          </div>
-                          <div class="col-9">
-                            <p class="mb-0">Diabetic Patients</p>
-                            <h4 class="my-0">9</h4>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-3">
-                            <h3 class="mb-0 mt-2 text-theme">
-                              <span class="fa fa-users"></span>
-                            </h3>
-                          </div>
-                          <div class="col-9">
-                            <p class="mb-0">Non-diabetic Patients</p>
-                            <h4 class="my-0">15</h4>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-3">
-                            <h3 class="mb-0 mt-2 text-theme">
-                              <span class="fa fa-percent"></span>
-                            </h3>
-                          </div>
-                          <div class="col-9">
-                            <p class="mb-0">Diabetic Rate</p>
-                            <h4 class="my-0">
-                              37.8
-                              <sub>%</sub>
-                            </h4>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header">
-                    <div class="row">
-                      <div class="col-md-8">
-                        <h4 class="my-0">Chart</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="panel-header-lgxx mt-4">
-                      <canvas id="distanceChart"></canvas>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header">
-                    <div class="row">
-                      <div class="col-md-8">
-                        <h4 class="my-0">Recent Patient</h4>
-                      </div>
-                      <div class="col-md-4 text-right">
-                        <a href="patients.html" class="btn btn-dark">View All</a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <table class="table sitetable table-hover">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Date</th>
-                          <th>Patient's Name</th>
-                          <th>Age</th>
-                          <th>Diabetic Status</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>12th Jan, 20202</td>
-                          <td>Kate Salami</td>
-                          <td>21 years</td>
-                          <td>
-                            <span class="badge badge-info">
-                              <span class="fa fa-plus pr-1"></span>
-                              Positive
-                            </span>
-                          </td>
-                          <td>
-                            <button class="btn btn-sm btn-secondary">
-                              <span class="small font-weight-bold">View</span>
-                            </button>
-                            <button class="btn btn-sm btn-dark">
-                              <span class="small font-weight-bold">Download Report</span>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>12th Jan, 20202</td>
-                          <td>Kate Salami</td>
-                          <td>21 years</td>
-                          <td>
-                            <span class="badge badge-info">
-                              <span class="fa fa-plus pr-1"></span>
-                              Positive
-                            </span>
-                          </td>
-                          <td>
-                            <button class="btn btn-sm btn-secondary">
-                              <span class="small font-weight-bold">View</span>
-                            </button>
-                            <button class="btn btn-sm btn-dark">
-                              <span class="small font-weight-bold">Download Report</span>
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+            <div class="col-md-6">
+              <div class="text-right">
+                <button
+                  type="button"
+                  class="btn btn-theme"
+                  data-toggle="modal"
+                  data-target="#modelId"
+                >
+                  <span class="fa fa-user mr-2"></span>
+                  Add Patient
+                </button>
+                <a class="btn btn-dark-sm">
+                  Logout
+                  <span class="fas fa-sign-out-alt ml-2"></span>
+                </a>
               </div>
             </div>
           </div>
+
+          <sidebar />
+          <fade-transition>
+            <router-view />
+          </fade-transition>
+
+          <!-- <home /> -->
         </div>
       </div>
     </div>
@@ -246,12 +89,17 @@
   </div>
 </template>
 <script>
-//import Sidebar from "@/layout/Sidebar";
+import Sidebar from "../../layout/Sidebar";
+import { FadeTransition } from "vue2-transitions";
+
+import Home from "./Home";
 export default {
   name: "dashboard",
   bodyClass: "",
   components: {
-    //sidebar: Sidebar
+    sidebar: Sidebar,
+    home: Home,
+    "fade-transition": FadeTransition
   },
   data() {
     return {};

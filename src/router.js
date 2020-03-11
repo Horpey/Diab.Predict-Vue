@@ -7,6 +7,10 @@ import MainFooter from './layout/MainFooter.vue';
 
 // Dashboard
 import Dashboard from './pages/dashboard/Dashboard.vue';
+import Home from './pages/dashboard/Home.vue';
+import Patients from './pages/dashboard/Patients.vue';
+import Profile from './pages/dashboard/Profile.vue';
+import ListPatient from './pages/dashboard/ListPatient.vue';
 
 Vue.use(Router);
 
@@ -39,7 +43,31 @@ export default new Router({
     {
       path: '/dashboard',
       name: 'dashboard',
-      components: { default: Dashboard }
+      components: { default: Dashboard },
+      children: [
+        {
+          path: '',
+          name: 'home',
+          component: Home
+        },
+        {
+          path: 'patients',
+          name: 'patients',
+          component: Patients,
+          children: [
+            {
+              path: 'listpatient:id',
+              name: 'list',
+              component: ListPatient
+            }
+          ]
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: Profile
+        }
+      ]
       // components: { default: Ontology, header: MainNavbar, footer: MainFooter },
     }
   ],

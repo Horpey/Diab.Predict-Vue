@@ -1,15 +1,61 @@
 <template>
   <div>
-    <h1>SideBar</h1>
+    <div class="sidebar">
+      <div class="logo">
+        <router-link to="/dashboard" class="simple-text logo-normal">Diab.Predict</router-link>
+        <div class="dateTime">
+          <p id="CurrentDate">3rd Tuesday Mar</p>
+          <h3 id="time">10:30pm</h3>
+        </div>
+      </div>
+      <div class="sidebar-wrapper" id="sidebar-wrapper">
+        <ul class="nav">
+          <li>
+            <router-link to="/dashboard" class="campaignlist">
+              <span class="fa fa-home"></span>
+              <p>Home</p>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/dashboard/patients" class="campaignlist">
+              <span class="fa fa-users"></span>
+              <p>Patients</p>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/dashboard/profile" class="campaignlist">
+              <span class="fa fa-user"></span>
+              <p>Profile</p>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/dashboard/support" class="campaignlist">
+              <span class="fa fa-question-circle"></span>
+              <p>Support</p>
+            </router-link>
+          </li>
+
+          <li class="active-pro">
+            <router-link to class="btn bg-white text-dark mb-2 mx-5">
+              <span class="text-left">Logout</span>
+              <span class="fas fa-sign-out-alt float-right mt-2 ml-5"></span>
+            </router-link>
+            <p class="text-center copyright">
+              ©
+              2020,
+              Diab.Predict. All rights reserved.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: "sidebar",
   bodyClass: "",
-  components: {
-    sidebar: Sidebar
-  },
+  components: {},
   data() {
     return {};
   },
@@ -17,5 +63,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-// @import "../assets/scss/main.scss";
+@import "../assets/scss/dashboard/index.scss";
 </style>

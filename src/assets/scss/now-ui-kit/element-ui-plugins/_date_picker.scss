@@ -81,7 +81,7 @@ $box-shadow-lg: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
     &.current span,
     &.current a.cell {
       background-color: white;
-      color: $primary-color !important;
+      color: $white-color !important;
       box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.2);
       border-radius: 50%;
     }
@@ -112,7 +112,9 @@ $box-shadow-lg: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
   width: 100% !important;
 }
 .el-date-editor.el-input .el-input__inner{
-  padding-left: 30px !important
+  padding-left: 30px !important;
+  border-radius: 0px !important;
+  height: 47px !important;
 }
 .el-date-picker .el-input{
   .el-input__inner{

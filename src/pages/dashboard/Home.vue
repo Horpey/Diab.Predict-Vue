@@ -1,6 +1,9 @@
  <template>
   <div class>
-    <div>
+    <div class="text-center mt-5" v-if="loading">
+      <img src="img/loadertheme.svg" alt="loading" height="50"/>
+    </div>
+    <div v-if="!loading">
       <div class="mt-2">
         <div class="row">
           <div class="col-md-3">
@@ -116,50 +119,31 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>12th Jan, 20202</td>
-                  <td>Kate Salami</td>
-                  <td>21 years</td>
+                <tr v-for="(patient, index) in startFrom(patients) " :key="index">
+                  <td>{{index + 1}}</td>
+                  <td>{{ formatData(patient.created_at) }}</td>
+                  <td>{{patient.name}}</td>
+                  <td>{{getAge(patient.dob)}}</td>
                   <td>
-                    <span class="badge badge-info">
+                    {{patient.diagnosis}}
+                    <!-- <span class="badge badge-info">
                       <span class="fa fa-plus pr-1"></span>
                       Positive
-                    </span>
+                    </span> -->
                   </td>
                   <td>
+                   <router-link
+                      :to="{path: '/dashboard/diagnose/' + patient.uuid, query: {dob: patient.dob}}"
+                      class="btn btn-sm btn-dark"
+                    >
+                      <span class="small font-weight-bold">Diagnose</span>
+                    </router-link>
                     <router-link
-                      to="/dashboard/patients/listpatient/2"
-                      class="mr-2 btn btn-sm btn-secondary"
+                      :to="{path: '/dashboard/patients/' + patient.uuid, query: {dob: patient.dob}}"
+                      class="ml-2 btn btn-sm btn-secondary"
                     >
                       <span class="small font-weight-bold">View</span>
                     </router-link>
-                    <button class="btn btn-sm btn-dark">
-                      <span class="small font-weight-bold">Download Report</span>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>12th Jan, 20202</td>
-                  <td>Kate Salami</td>
-                  <td>21 years</td>
-                  <td>
-                    <span class="badge badge-info">
-                      <span class="fa fa-plus pr-1"></span>
-                      Positive
-                    </span>
-                  </td>
-                  <td>
-                    <router-link
-                      to="/dashboard/patients/listpatient/2"
-                      class="mr-2 btn btn-sm btn-secondary"
-                    >
-                      <span class="small font-weight-bold">View</span>
-                    </router-link>
-                    <button class="btn btn-sm btn-dark">
-                      <span class="small font-weight-bold">Download Report</span>
-                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -176,11 +160,52 @@ export default {
   bodyClass: "",
   components: {},
   data() {
-    return {};
+    return {
+      loading: false,
+      patients: []
+    };
   },
-  methods: {}
+  mounted(){
+    this.loading = true
+    this.getPatients()
+  },
+  methods: {
+    getPatients(){
+      this.$store
+      .dispatch("getPatients")
+      .then(resp => {
+        this.loading = false
+          console.log(resp.data.data)
+          this.patients = resp.data.data;
+      })
+      .catch(err => {
+        console.log(err);
+        this.loading = false
+        this.$toast.info("Unable to load patients data, Try again!")
+      });
+    },
+    formatData(created){
+      var moment = require('moment');
+      return moment(created).format("Do MMM YYYY");
+    },
+    getAge(dob){
+      var moment = require('moment');
+      return moment(dob).fromNow(true);
+    },
+    startFrom(arr) {
+      return arr.reverse().slice(0,2);
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
 @import "../../assets/scss/dashboard/index.scss";
+.el-date-editor.el-input .el-input__inner {
+    padding-left: 30px !important;
+    border-radius: 0px !important;
+    height: 47px !important;
+}
+.el-year-table td .cell{
+  color: white!important;
+}
 </style>

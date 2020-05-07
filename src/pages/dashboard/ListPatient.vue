@@ -6,6 +6,12 @@
           <div class="col-md-4">
             <div class="card">
               <div class="card-body mx-3 my-2">
+                <div class="mb-4">
+                  <router-link to="/dashboard/patients" class="text-dark">
+                    <span class="fa fa-arrow-left mr-2" style="font-size: 14px;"></span>
+                    <span class="pt-1">Back</span>
+                  </router-link>
+                </div>
                 <p class="mb-2">
                   <span class="fa fa-calendar mr-2"></span>
                   12th Feb, 2020

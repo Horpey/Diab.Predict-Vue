@@ -15,8 +15,8 @@
                     />
                   </a>
                   <div class="media-body ml-3">
-                    <h5 class="m-0">Adeniran Opeyemi</h5>
-                    <p class="mb-1">adeniran.opeyemi.ao@gmail.com</p>
+                    <h5 class="m-0">{{user.firstname}} {{user.lastname}}</h5>
+                    <p class="mb-1">{{user.email}}</p>
                     <button
                       type="button"
                       data-toggle="modal"
@@ -68,7 +68,13 @@ export default {
   bodyClass: "",
   components: {},
   data() {
-    return {};
+    return {
+      user: {}
+    };
+  },
+  mounted(){
+    this.user = JSON.parse(localStorage.getItem('user')).user;
+    console.log(this.user)
   },
   methods: {}
 };

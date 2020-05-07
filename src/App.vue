@@ -13,7 +13,7 @@
 import { FadeTransition } from "vue2-transitions";
 export default {
   components: {
-    " fade-transition": FadeTransition
+    "fade-transition": FadeTransition
   }
 };
 </script>

@@ -1,7 +1,10 @@
  <template>
   <div class>
     <div>
-      <div class="mt-2">
+      <div class="text-center mt-5" v-if="loading">
+        <img src="/img/loadertheme.svg" alt="loading" height="50" />
+      </div>
+      <div class="mt-2" v-if="!loading">
         <div class="card">
           <div class="card-body">
             <div class="row">
@@ -21,20 +24,13 @@
                         <option value="female">Female</option>
                       </select>
 
-                      <select class="form-control" id="gender" style="height: 48px; width: 120px">
-                        <option value="gender">Status</option>
-                        <option value="male">Diabetes</option>
-                        <option value="female">Non-Diabetes</option>
+                      <select class="form-control" id="status" style="height: 48px; width: 120px">
+                        <option value="status">Status</option>
+                        <option value="diab">Diabetes</option>
+                        <option value="nondiab">Non-Diabetes</option>
                       </select>
                     </div>
                   </form>
-                  <!-- <div class="form-group cardform">
-                                                    <select class="form-control" id="gender" style="height: 48px;">
-                                                        <option value="gender">Gender</option>
-                                                        <option value="male">Male</option>
-                                                        <option value="female">Female</option>
-                                                    </select>
-                  </div>-->
                 </div>
               </div>
               <div class="col-md-4">
@@ -59,50 +55,31 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>12th Jan, 2020</td>
-                  <td>Kate Salami</td>
-                  <td>21 years</td>
+                <tr v-for="(patient, index) in startFrom(patients) " :key="index">
+                  <td>{{index + 1}}</td>
+                  <td>{{ formatData(patient.created_at) }}</td>
+                  <td>{{patient.name}}</td>
+                  <td>{{getAge(patient.dob)}}</td>
                   <td>
-                    <span class="badge badge-info">
+                    {{patient.diagnosis}}
+                    <!-- <span class="badge badge-info">
                       <span class="fa fa-plus pr-1"></span>
                       Positive
-                    </span>
+                    </span>-->
                   </td>
                   <td>
                     <router-link
-                      to="/dashboard/patients/listpatient/2"
-                      class="mr-2 btn btn-sm btn-secondary"
+                      :to="{path: '/dashboard/diagnose/' + patient.uuid, query: {dob: patient.dob}}"
+                      class="btn btn-sm btn-dark"
                     >
-                      <span class="small font-weight-bold">View</span>
-                    </router-link>
-                    <a href="diagnose.html" class="btn btn-sm btn-dark">
                       <span class="small font-weight-bold">Diagnose</span>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>12th Jan, 2020</td>
-                  <td>Kate Salami</td>
-                  <td>21 years</td>
-                  <td>
-                    <span class="badge badge-danger">
-                      <span class="fa fa-minus pr-1"></span>
-                      Negative
-                    </span>
-                  </td>
-                  <td>
+                    </router-link>
                     <router-link
-                      to="/dashboard/patients/listpatient/2"
-                      class="mr-2 btn btn-sm btn-secondary"
+                      :to="{path: '/dashboard/patients/' + patient.uuid, query: {dob: patient.dob}}"
+                      class="ml-2 btn btn-sm btn-secondary"
                     >
                       <span class="small font-weight-bold">View</span>
                     </router-link>
-                    <a href="diagnose.html" class="btn btn-sm btn-dark">
-                      <span class="small font-weight-bold">Diagnose</span>
-                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -119,9 +96,41 @@ export default {
   bodyClass: "",
   components: {},
   data() {
-    return {};
+    return {
+      loading: true,
+      patients: []
+    };
   },
-  methods: {}
+  methods: {
+    getPatients() {
+      this.$store
+        .dispatch("getPatients")
+        .then(resp => {
+          this.loading = false;
+          console.log(resp.data.data);
+          this.patients = resp.data.data;
+        })
+        .catch(err => {
+          console.log(err);
+          this.loading = false;
+          this.$toast.info("Unable to load patients data, Try again!");
+        });
+    },
+    formatData(created) {
+      var moment = require("moment");
+      return moment(created).format("Do MMM YYYY");
+    },
+    getAge(dob) {
+      var moment = require("moment");
+      return moment(dob).fromNow(true);
+    },
+    startFrom(arr) {
+      return arr.reverse().slice();
+    }
+  },
+  mounted() {
+    this.getPatients();
+  }
 };
 </script>
 <style lang="scss" scoped>

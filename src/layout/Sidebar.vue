@@ -36,10 +36,10 @@
           </li>
 
           <li class="active-pro">
-            <router-link to class="btn bg-white text-dark mb-2 mx-5">
+            <a @click="logout" class="btn bg-white text-dark mb-2 mx-5">
               <span class="text-left">Logout</span>
               <span class="fas fa-sign-out-alt float-right mt-2 ml-5"></span>
-            </router-link>
+            </a>
             <p class="text-center copyright">
               ©
               2020,
@@ -59,7 +59,14 @@ export default {
   data() {
     return {};
   },
-  methods: {}
+  methods: {
+     logout() {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/");
+        this.$toast.info("Successfully logged out");
+      });
+    },
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -49,8 +49,8 @@ export const actions = {
         method: 'POST'
       })
         .then(resp => {
-          const token = resp.data.token;
-          const user = resp.data.user;
+          const token = resp.data.data.token;
+          const user = resp.data.data.user;
           localStorage.setItem('token', token);
           axios.defaults.headers.common['Authorization'] = token;
           commit('auth_success', token, user);

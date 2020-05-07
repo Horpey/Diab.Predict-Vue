@@ -16,6 +16,11 @@ html {
     margin-top: 8%;
     margin-bottom: 0px;
   }
+  .page-header {
+    min-height: 100vh;
+    max-height: unset!important;
+    padding: 0;
+  }
 
   .navbar-line-bottom {
     border-bottom: 1px solid #ffffff4a;

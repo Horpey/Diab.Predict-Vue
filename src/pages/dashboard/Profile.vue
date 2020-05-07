@@ -12,6 +12,7 @@
                       src="https://res.cloudinary.com/horpey/image/upload/v1583331535/avatar_lqajeh.png"
                       class="rounded-circle img-raised"
                       alt
+                      height="50"
                     />
                   </a>
                   <div class="media-body ml-3">

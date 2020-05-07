@@ -218,8 +218,8 @@ export default {
             this.rloading = false;
             this.btndisable = false
             console.log(resp)
+            this.$toast.success("Account Created Successfully!");
             this.$router.push("/dashboard");
-            this.$toast.success("Account Created Successfully!")
           })
           .catch(err => {
             this.rloading = false;

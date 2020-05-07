@@ -55,7 +55,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(patient, index) in startFrom(patients) " :key="index">
+                <tr v-for="(patient, index) in patients" :key="index">
                   <td>{{index + 1}}</td>
                   <td>{{ formatData(patient.created_at) }}</td>
                   <td>{{patient.name}}</td>
@@ -124,9 +124,9 @@ export default {
       var moment = require("moment");
       return moment(dob).fromNow(true);
     },
-    startFrom(arr) {
-      return arr.reverse().slice();
-    }
+    // startFrom(arr) {
+    //   return arr.reverse().slice();
+    // }
   },
   mounted() {
     this.getPatients();

@@ -147,6 +147,10 @@
                   </tbody>
                 </table>
                 <div class="text-right">
+                  <p
+                    v-if="sendingdb"
+                    class="font-weight-bold d-inline-block mr-3"
+                  >Sending Data to Database...</p>
                   <a href="#" class="btn btn-outline-primary text-dark">
                     <span class="fa fa-file-download mr-2"></span>
                     Download Report
@@ -177,11 +181,14 @@ export default {
       plasma_r: "",
       plasma_f: "",
       hbA1c: "",
+      sendingdb: false,
       reportData: {
+        patientID: "",
         bl1: "",
         bl2: "",
         pl1: "",
         pl2: "",
+        hba1c: "",
         ds: "",
         dt: ""
       }
@@ -220,7 +227,16 @@ export default {
           this.reportData.bl2 = this.bs_pp;
           this.reportData.pl1 = this.plasma_r;
           this.reportData.pl2 = this.plasma_f;
-          console.log(resp);
+          this.reportData.hba1c = this.hbA1c;
+          this.reportData.patientID = this.$route.params.id;
+          if (resp.data.prediction == "Normal") {
+            this.reportData.ds = resp.data.prediction;
+          } else {
+            this.reportData.ds = "Diabetic";
+            this.reportData.dt = resp.data.prediction;
+          }
+          console.log(this.reportData);
+          this.sendtoDB();
         })
         .catch(err => {
           this.rloading = false;
@@ -228,15 +244,30 @@ export default {
           this.btndisable = false;
           this.$toast.error("Unable to make diagnosis, Please try again");
         });
+    },
+    sendtoDB() {
+      console.log(this.reportData);
+      this.sendingdb = true;
+      let reportdat = this.reportData;
+      this.$store
+        .dispatch("senttoDB", reportdat)
+        .then(resp => {
+          console.log(resp);
+          this.sendingdb = false;
+        })
+        .catch(err => {
+          this.sendingdb = false;
+        });
     }
   },
   mounted() {
     let patientId = this.$route.params.id;
     let patientDob = this.$route.query.dob;
     var moment = require("moment");
-    this.dob = moment(patientDob)
+    this.age = moment(patientDob)
       .fromNow(true)
       .replace(" years", "");
+    // console.log(this.age);
   }
 };
 </script>

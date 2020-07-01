@@ -2,7 +2,10 @@ import axios from 'axios';
 const baseURL = 'https://diab-predict.herokuapp.com/api';
 
 export const actions = {
-  login({ commit, dispatch }, user) {
+  login({
+    commit,
+    dispatch
+  }, user) {
     return new Promise((resolve, reject) => {
       commit('auth_request');
       let userData = new FormData();
@@ -10,10 +13,10 @@ export const actions = {
       userData.append('password', user.password);
 
       axios({
-        url: baseURL + '/auth/login',
-        data: userData,
-        method: 'POST'
-      })
+          url: baseURL + '/auth/login',
+          data: userData,
+          method: 'POST'
+        })
         .then(resp => {
           const token = resp.data.data.token;
           const user = resp.data.data.user;
@@ -33,7 +36,10 @@ export const actions = {
         });
     });
   },
-  signup({ commit, dispatch }, user) {
+  signup({
+    commit,
+    dispatch
+  }, user) {
     return new Promise((resolve, reject) => {
       commit('auth_request');
       let userData = new FormData();
@@ -44,10 +50,10 @@ export const actions = {
       userData.append('password_confirmation', user.password_confirmation);
 
       axios({
-        url: baseURL + '/auth/register',
-        data: userData,
-        method: 'POST'
-      })
+          url: baseURL + '/auth/register',
+          data: userData,
+          method: 'POST'
+        })
         .then(resp => {
           const token = resp.data.data.token;
           const user = resp.data.data.user;
@@ -66,18 +72,20 @@ export const actions = {
         });
     });
   },
-  getUser({ commit }) {
+  getUser({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       commit('loading', true);
       let userToken = localStorage.getItem('token');
       axios({
-        url: baseURL + '/profile',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + userToken
-        }
-      })
+          url: baseURL + '/profile',
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + userToken
+          }
+        })
         .then(resp => {
           localStorage.setItem('user', JSON.stringify(resp.data.data));
           commit('loading', false);
@@ -89,17 +97,19 @@ export const actions = {
         });
     });
   },
-  getPatients({ commit }) {
+  getPatients({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       let userToken = localStorage.getItem('token');
       axios({
-        url: baseURL + '/patient',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + userToken
-        }
-      })
+          url: baseURL + '/patient',
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + userToken
+          }
+        })
         .then(resp => {
           resolve(resp);
         })
@@ -108,7 +118,42 @@ export const actions = {
         });
     });
   },
-  addPatient({ commit, dispatch }, patient) {
+
+  senttoDB({
+    commit,
+  }, reportdata) {
+    return new Promise((resolve, reject) => {
+      commit('auth_request');
+      let patientData = new FormData();
+      patientData.append('blood_sugar_before', reportdata.bl1);
+      patientData.append('blood_sugar_after', reportdata.bl2);
+      patientData.append('plasma_glucose', reportdata.pl1);
+      patientData.append('plasma_glucose_morning', reportdata.bl2);
+      patientData.append('hba1c', reportdata.hba1c);
+
+      let userToken = localStorage.getItem('token');
+      axios({
+          url: baseURL + '/patient/' + reportdata.patientID + '/diagnose',
+          data: patientData,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + userToken
+          }
+        })
+        .then(resp => {
+
+          resolve(resp);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  },
+  addPatient({
+    commit,
+    dispatch
+  }, patient) {
     return new Promise((resolve, reject) => {
       commit('auth_request');
       let patientData = new FormData();
@@ -117,16 +162,16 @@ export const actions = {
       patientData.append('dob', patient.dob);
       let userToken = localStorage.getItem('token');
       axios({
-        url: baseURL + '/patient',
-        data: patientData,
-        method: 'POST',
-        headers: {
+          url: baseURL + '/patient',
+          data: patientData,
+          method: 'POST',
+          headers: {
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + userToken
           }
-      })
+        })
         .then(resp => {
-            dispatch('getPatients');
+          dispatch('getPatients');
           resolve(resp);
         })
         .catch(err => {
@@ -134,24 +179,50 @@ export const actions = {
         });
     });
   },
-  makeDiagnosis({ commit, dispatch }, patient) {
+  sendPatientData({
+    commit,
+  }, id) {
+    return new Promise((resolve, reject) => {
+
+      commit('auth_request');
+      let userToken = localStorage.getItem('token');
+      axios({
+          url: baseURL + '/patient/' + id,
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + userToken
+          }
+        })
+        .then(resp => {
+          resolve(resp);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  },
+  makeDiagnosis({
+    commit,
+    dispatch
+  }, patient) {
     return new Promise((resolve, reject) => {
       commit('auth_request');
       let patientData = new FormData();
-      patientData.append('age', patient.age);
-      patientData.append('bs_fast', patient.bs_fast);
-      patientData.append('bs_pp', patient.bs_pp);
-      patientData.append('plasma_r', patient.plasma_r);
-      patientData.append('plasma_f', patient.plasma_f);
-      patientData.append('hbA1c', patient.hbA1c);
+      patientData.append('age', parseInt(patient.age));
+      patientData.append('bs_fast', parseFloat(patient.bs_fast));
+      patientData.append('bs_pp', parseFloat(patient.bs_pp));
+      patientData.append('plasma_r', parseFloat(patient.plasma_r));
+      patientData.append('plasma_f', parseFloat(patient.plasma_f));
+      patientData.append('hbA1c', parseFloat(patient.hbA1c));
 
       axios({
-        url: 'https://diabetiespred.herokuapp.com/predict',
-        data: patientData,
-        method: 'POST',
-      })
+          url: 'https://diabetiespred.herokuapp.com/predict',
+          data: patientData,
+          method: 'POST',
+        })
         .then(resp => {
-            // dispatch('getPatients');
+          // dispatch('getPatients');
           resolve(resp);
         })
         .catch(err => {
@@ -159,7 +230,9 @@ export const actions = {
         });
     });
   },
-  logout({ commit }) {
+  logout({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       commit('logout');
       localStorage.removeItem('token');

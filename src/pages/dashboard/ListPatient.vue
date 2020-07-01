@@ -12,25 +12,31 @@
                     <span class="pt-1">Back</span>
                   </router-link>
                 </div>
-                <p class="mb-2">
-                  <span class="fa fa-calendar mr-2"></span>
-                  12th Feb, 2020
-                </p>
-                <h3 class="text-capitalize font-weight-bold mb-0">Delilah Salam</h3>
-                <p>43 Years</p>
-                <p>
-                  <span class="badge badge-danger">
-                    <span class="fa fa-plus mr-2"></span>
-                    Negative
-                  </span>
+                <div class="text-center my-5" v-if="loading">
+                  <img src="/img/loadertheme.svg" alt="loading" height="50" />
+                </div>
+                <div v-else>
+                  <p class="mb-2">
+                    <span class="fa fa-calendar mr-2"></span>
+                    {{formatDate(patientData.created_at)}}
+                  </p>
+                  <h3 class="text-capitalize font-weight-bold mb-0">{{patientData.name}}</h3>
+                  <p class="font-weight-bold">{{patientData.gender}}</p>
+                  <p>{{getAge(patientData.dob)}}</p>
+                  <p>
+                    <span class="badge badge-danger">
+                      <span class="fa fa-plus mr-2"></span>
+                      Negative
+                    </span>
 
-                  <span class="badge badge-info">Type 2</span>
-                </p>
+                    <span class="badge badge-info">Type 2</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
           <div class="col-md-7">
-            <div class="card">
+            <div class="card" v-if="!loading">
               <div class="card-body">
                 <div class>
                   <table class="table">
@@ -41,19 +47,36 @@
                       </tr>
                       <tr>
                         <td>Fasting or before breakfast</td>
-                        <td class="text-info">60–90 mg/dl</td>
+                        <td class="text-info">
+                          <span v-if="patientData.diagnosis">
+                            {{patientData.diagnosis.blood_sugar_before}}
+                            mg/dl
+                          </span>
+                        </td>
                       </tr>
                       <tr>
                         <td>2 hours after meal</td>
-                        <td class="text-danger">100–120 mg/dl</td>
+                        <td class="text-danger">
+                          <span
+                            v-if="patientData.diagnosis"
+                          >{{patientData.diagnosis.blood_sugar_after}} mg/dl</span>
+                        </td>
                       </tr>
                       <tr>
                         <td>Plasma Glucose (any Time)</td>
-                        <td class="text-info">2 mmol/L</td>
+                        <td class="text-info">
+                          <span
+                            v-if="patientData.diagnosis"
+                          >{{patientData.diagnosis.plasma_glucose}} mmol/L</span>
+                        </td>
                       </tr>
                       <tr>
                         <td>Plasma Glucose (Morning)</td>
-                        <td class="text-danger">2 mmol/L</td>
+                        <td class="text-danger">
+                          <span
+                            v-if="patientData.diagnosis"
+                          >{{patientData.diagnosis.plasma_glucose_morning}} mmol/L</span>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -89,14 +112,40 @@
   </div>
 </template>  
  <script>
+var moment = require("moment");
 export default {
   name: "listPatient",
   bodyClass: "",
   components: {},
   data() {
-    return {};
+    return {
+      loading: true,
+      patientData: {}
+    };
   },
-  methods: {}
+  methods: {
+    getAge(dob) {
+      let age = moment(dob).fromNow(true);
+      return age;
+    },
+    formatDate(date) {
+      let formatted = moment(date).format("dddd, MMMM Do YYYY");
+      return formatted;
+    }
+  },
+  mounted() {
+    let id = this.$route.params.id;
+    this.$store
+      .dispatch("sendPatientData", id)
+      .then(resp => {
+        console.log(resp.data.data);
+        this.patientData = resp.data.data;
+        this.loading = false;
+      })
+      .catch(err => {
+        this.loading = false;
+      });
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -4,8 +4,8 @@
       <div class="logo">
         <router-link to="/dashboard" class="simple-text logo-normal">Diab.Predict</router-link>
         <div class="dateTime">
-          <p id="CurrentDate">3rd Tuesday Mar</p>
-          <h3 id="time">10:30pm</h3>
+          <p id="CurrentDate">{{datee}}</p>
+          <h3 id="time">{{timee}}</h3>
         </div>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
@@ -52,20 +52,29 @@
   </div>
 </template>
 <script>
+var moment = require("moment");
 export default {
   name: "sidebar",
   bodyClass: "",
   components: {},
+  computed: {
+    datee() {
+      return moment().format("dddd, MMMM Do YYYY");
+    },
+    timee() {
+      return moment().format("h:mm a");
+    }
+  },
   data() {
     return {};
   },
   methods: {
-     logout() {
+    logout() {
       this.$store.dispatch("logout").then(() => {
         this.$router.push("/");
         this.$toast.info("Successfully logged out");
       });
-    },
+    }
   }
 };
 </script>

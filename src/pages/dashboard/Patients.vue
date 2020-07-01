@@ -61,7 +61,7 @@
                   <td>{{patient.name}}</td>
                   <td>{{getAge(patient.dob)}}</td>
                   <td>
-                    {{patient.diagnosis}}
+                    <p v-if="patient.diagnosis">{{patient.diagnosis.result}}</p>
                     <!-- <span class="badge badge-info">
                       <span class="fa fa-plus pr-1"></span>
                       Positive
@@ -123,7 +123,7 @@ export default {
     getAge(dob) {
       var moment = require("moment");
       return moment(dob).fromNow(true);
-    },
+    }
     // startFrom(arr) {
     //   return arr.reverse().slice();
     // }

@@ -19,14 +19,7 @@
                         Blood Sugar (Before Meal)
                         <span class="fa fa-info-circle ml-2"></span>
                       </label>
-                      <input
-                        required
-                        v-model="bs_fast"
-                        type="number"
-                        id="bs_fast"
-                        value
-                        class="form-control"
-                      />
+                      <input required v-model="bs_fast" id="bs_fast" value class="form-control" />
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -35,14 +28,7 @@
                         Blood Sugar (After Meal)
                         <span class="fa fa-info-circle ml-2"></span>
                       </label>
-                      <input
-                        required
-                        v-model="bs_pp"
-                        type="number"
-                        id="afterMeal"
-                        value
-                        class="form-control"
-                      />
+                      <input required v-model="bs_pp" id="afterMeal" value class="form-control" />
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -51,14 +37,7 @@
                         Plasma Glucose
                         <span class="fa fa-info-circle ml-2"></span>
                       </label>
-                      <input
-                        required
-                        v-model="plasma_r"
-                        type="number"
-                        id="plasma"
-                        value
-                        class="form-control"
-                      />
+                      <input required v-model="plasma_r" id="plasma" value class="form-control" />
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -67,14 +46,7 @@
                         Plasma Glucose (Morning)
                         <span class="fa fa-info-circle ml-2"></span>
                       </label>
-                      <input
-                        required
-                        v-model="plasma_f"
-                        type="number"
-                        id="plasmam"
-                        value
-                        class="form-control"
-                      />
+                      <input required v-model="plasma_f" id="plasmam" value class="form-control" />
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -83,14 +55,7 @@
                         HbA1c
                         <span class="fa fa-info-circle ml-2"></span>
                       </label>
-                      <input
-                        required
-                        v-model="hbA1c"
-                        type="number"
-                        id="HbA1c"
-                        value
-                        class="form-control"
-                      />
+                      <input required v-model="hbA1c" id="HbA1c" value class="form-control" />
                     </div>
                   </div>
                 </div>
@@ -116,7 +81,7 @@
           <div class="card">
             <div class="card-body" style="min-height: 495px;">
               <h3 class="text-capitalize text-center font-weight-bold mb-3">Report</h3>
-              <div class="ml-loading">
+              <div class="ml-loading" v-if="mlloading">
                 <div class="w-100 text-center text-light">
                   <svg
                     class="gear"
@@ -138,13 +103,12 @@
                   >
                     <use href="#p" />
                   </svg>
-                  <h5 class="font-weight-bold mt-2 mb-0 text-black"
-                  >Please wait..</h5>
+                  <h5 class="font-weight-bold mt-2 mb-0 text-black">Please wait..</h5>
                   <div class="text-muted">Our ML Engine is processing the data.</div>
                 </div>
               </div>
 
-              <div class style="display: none;">
+              <div class v-else>
                 <table class="table">
                   <tbody>
                     <tr>
@@ -153,19 +117,19 @@
                     </tr>
                     <tr>
                       <td>Fasting or before breakfast</td>
-                      <td class="text-info">60–90 mg/dl</td>
+                      <td class="text-info">{{reportData.bl1}} mg/dl</td>
                     </tr>
                     <tr>
                       <td>2 hours after meal</td>
-                      <td class="text-danger">100–120 mg/dl</td>
+                      <td class="text-danger">{{reportData.bl2}} mg/dl</td>
                     </tr>
                     <tr>
                       <td>Plasma Glucose (any Time)</td>
-                      <td class="text-info">2 mmol/L</td>
+                      <td class="text-info">{{reportData.pl1}} mmol/L</td>
                     </tr>
                     <tr>
                       <td>Plasma Glucose (Morning)</td>
-                      <td class="text-danger">2 mmol/L</td>
+                      <td class="text-danger">{{reportData.bl2}} mmol/L</td>
                     </tr>
                   </tbody>
                 </table>
@@ -174,11 +138,11 @@
                   <tbody>
                     <tr>
                       <th class="text-info">Diabetic Status</th>
-                      <th>Normal</th>
+                      <th>{{reportData.ds}}</th>
                     </tr>
                     <tr>
                       <th class="text-info">Diabetic Type</th>
-                      <th>Type 1</th>
+                      <th>{{reportData.dt}}</th>
                     </tr>
                   </tbody>
                 </table>
@@ -204,6 +168,7 @@ export default {
   data() {
     return {
       rloading: false,
+      mlloading: false,
       btndisable: false,
       patientID: "",
       age: "",
@@ -211,7 +176,15 @@ export default {
       bs_pp: "",
       plasma_r: "",
       plasma_f: "",
-      hbA1c: ""
+      hbA1c: "",
+      reportData: {
+        bl1: "",
+        bl2: "",
+        pl1: "",
+        pl2: "",
+        ds: "",
+        dt: ""
+      }
     };
   },
   methods: {
@@ -223,6 +196,8 @@ export default {
       let plasma_r = this.plasma_r;
       let plasma_f = this.plasma_f;
       let hbA1c = this.hbA1c;
+
+      this.mlloading = true;
 
       this.btndisable = true;
       this.rloading = true;
@@ -239,10 +214,17 @@ export default {
         .then(resp => {
           this.rloading = false;
           this.btndisable = false;
+          this.mlloading = false;
+
+          this.reportData.bl1 = this.bs_fast;
+          this.reportData.bl2 = this.bs_pp;
+          this.reportData.pl1 = this.plasma_r;
+          this.reportData.pl2 = this.plasma_f;
           console.log(resp);
         })
         .catch(err => {
           this.rloading = false;
+          this.mlloading = false;
           this.btndisable = false;
           this.$toast.error("Unable to make diagnosis, Please try again");
         });

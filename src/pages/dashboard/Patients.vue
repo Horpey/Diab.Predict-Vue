@@ -61,11 +61,17 @@
                   <td>{{patient.name}}</td>
                   <td>{{getAge(patient.dob)}}</td>
                   <td>
-                    <p v-if="patient.diagnosis">{{patient.diagnosis.result}}</p>
-                    <!-- <span class="badge badge-info">
-                      <span class="fa fa-plus pr-1"></span>
-                      Positive
-                    </span>-->
+                    <!-- <p v-if="patient.diagnosis">{{patient.diagnosis.result}}</p> -->
+
+                    <span
+                      v-if="patient.diagnosis"
+                      :class="{badge:true, 'badge-danger':getStatus(patient.diagnosis) == 'negative','badge-info':getStatus(patient.diagnosis) == 'positive'}"
+                    >
+                      <span
+                        :class="{fa:true,'pr-1':true, 'fa-plus':getStatus(patient.diagnosis) == 'positive',  'fa-minus':getStatus(patient.diagnosis) == 'negative'}"
+                      ></span>
+                      {{getStatus(patient.diagnosis)}}
+                    </span>
                   </td>
                   <td>
                     <router-link
@@ -123,6 +129,15 @@ export default {
     getAge(dob) {
       var moment = require("moment");
       return moment(dob).fromNow(true);
+    },
+    getStatus(diagnose) {
+      if (diagnose.result) {
+        return diagnose.result.status;
+      } else {
+        return "";
+      }
+
+      // return diagnose.result;
     }
     // startFrom(arr) {
     //   return arr.reverse().slice();

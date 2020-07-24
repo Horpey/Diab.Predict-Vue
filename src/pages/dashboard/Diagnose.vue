@@ -230,9 +230,10 @@ export default {
           this.reportData.hba1c = this.hbA1c;
           this.reportData.patientID = this.$route.params.id;
           if (resp.data.prediction == "Normal") {
-            this.reportData.ds = resp.data.prediction;
+            this.reportData.ds = "negative";
+            this.reportData.dt = "";
           } else {
-            this.reportData.ds = "Diabetic";
+            this.reportData.ds = "positive";
             this.reportData.dt = resp.data.prediction;
           }
           console.log(this.reportData);

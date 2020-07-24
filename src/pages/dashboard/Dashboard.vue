@@ -119,9 +119,7 @@ export default {
       rloading: false
     };
   },
-  mounted() {
-    
-  },
+  mounted() {},
   methods: {
     logout() {
       this.$store.dispatch("logout").then(() => {
@@ -129,6 +127,7 @@ export default {
         this.$toast.info("Successfully logged out");
       });
     },
+
     addPatient() {
       this.btndisable = true;
       this.rloading = true;
@@ -150,6 +149,7 @@ export default {
           this.dob = "";
           this.patientModal = false;
           this.$toast.success("Successfully added a patient!");
+          location.reload();
         })
         .catch(err => {
           this.rloading = false;

@@ -7,10 +7,10 @@
             <div class="card">
               <div class="card-body mx-3 my-2">
                 <div class="mb-4">
-                  <router-link to="/dashboard/patients" class="text-dark">
+                  <a href="#" @click="$router.back()" class="text-dark">
                     <span class="fa fa-arrow-left mr-2" style="font-size: 14px;"></span>
                     <span class="pt-1">Back</span>
-                  </router-link>
+                  </a>
                 </div>
                 <div class="text-center my-5" v-if="loading">
                   <img src="/img/loadertheme.svg" alt="loading" height="50" />
@@ -24,12 +24,17 @@
                   <p class="font-weight-bold">{{patientData.gender}}</p>
                   <p>{{getAge(patientData.dob)}}</p>
                   <p>
-                    <span class="badge badge-danger">
-                      <span class="fa fa-plus mr-2"></span>
-                      Negative
+                    <span class="badge badge-danger text-capitalize">
+                      <span
+                        :class="{fa:true,'mr-2':true, 'fa-plus':getStatus(patientData.diagnosis) == 'positive',  'fa-minus':getStatus(patientData.diagnosis) == 'negative'}"
+                      ></span>
+                      {{getStatus(patientData.diagnosis)}}
                     </span>
 
-                    <span class="badge badge-info">Type 2</span>
+                    <span
+                      v-if="getStatus(patientData.diagnosis) == 'positive'"
+                      class="badge badge-info text-capitalize"
+                    >{{getType(patientData.diagnosis)}}</span>
                   </p>
                 </div>
               </div>
@@ -85,11 +90,15 @@
                     <tbody>
                       <tr>
                         <th class="text-info">Diabetic Status</th>
-                        <th>Normal</th>
+                        <th>
+                          <span class="text-capitalize">{{getStatus(patientData.diagnosis)}}</span>
+                        </th>
                       </tr>
                       <tr>
                         <th class="text-info">Diabetic Type</th>
-                        <th>Type 1</th>
+                        <th>
+                          <span class="text-capitalize">{{getType(patientData.diagnosis)}}</span>
+                        </th>
                       </tr>
                     </tbody>
                   </table>
@@ -131,6 +140,20 @@ export default {
     formatDate(date) {
       let formatted = moment(date).format("dddd, MMMM Do YYYY");
       return formatted;
+    },
+    getStatus(diagnose) {
+      if (diagnose.result) {
+        return diagnose.result.status;
+      } else {
+        return "";
+      }
+    },
+    getType(diagnose) {
+      if (diagnose.result) {
+        return diagnose.result.type;
+      } else {
+        return "";
+      }
     }
   },
   mounted() {

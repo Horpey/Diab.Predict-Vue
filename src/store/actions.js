@@ -118,7 +118,27 @@ export const actions = {
         });
     });
   },
-
+  getStatistic({
+    commit
+  }) {
+    return new Promise((resolve, reject) => {
+      let userToken = localStorage.getItem('token');
+      axios({
+          url: baseURL + '/stats',
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + userToken
+          }
+        })
+        .then(resp => {
+          resolve(resp);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  },
   senttoDB({
     commit,
   }, reportdata) {
@@ -130,6 +150,8 @@ export const actions = {
       patientData.append('plasma_glucose', reportdata.pl1);
       patientData.append('plasma_glucose_morning', reportdata.bl2);
       patientData.append('hba1c', reportdata.hba1c);
+      patientData.append('status', reportdata.ds)
+      patientData.append('type', reportdata.dt)
 
       let userToken = localStorage.getItem('token');
       axios({
@@ -215,6 +237,8 @@ export const actions = {
       patientData.append('plasma_r', parseFloat(patient.plasma_r));
       patientData.append('plasma_f', parseFloat(patient.plasma_f));
       patientData.append('hbA1c', parseFloat(patient.hbA1c));
+
+
 
       axios({
           url: 'https://diabetiespred.herokuapp.com/predict',

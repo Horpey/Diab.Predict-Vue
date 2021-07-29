@@ -2,7 +2,9 @@
   <div>
     <div class="sidebar">
       <div class="logo">
-        <router-link to="/dashboard" class="simple-text logo-normal">Diab.Predict</router-link>
+        <router-link to="/dashboard" class="simple-text logo-normal">
+          <img src="/img/logo-white.svg" class="mb-4" height="30" alt="logo">
+        </router-link>
         <div class="dateTime">
           <p id="CurrentDate">{{datee}}</p>
           <h3 id="time">{{timee}}</h3>

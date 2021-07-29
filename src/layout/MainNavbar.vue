@@ -8,7 +8,7 @@
   >
     <template slot-scope="{ toggle, isToggled }">
       <router-link class="navbar-brand" to="/">
-       Diab.Predict
+      <img height="44" src="/img/logo.svg" alt="logo">
       </router-link>
     </template>
     <template slot="navbar-menu">
@@ -20,14 +20,14 @@
           <p>Home</p>
         </router-link>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <router-link
           class="nav-link"
           to="/ontology"
         >
           <p>Ontology</p>
         </router-link>
-      </li>
+      </li> -->
 
       <li class="nav-item">
         <router-link

@@ -17,7 +17,7 @@
                   </div>
                   <div class="col-9">
                     <p class="mb-0">Patients</p>
-                    <h4 class="my-0">{{ stats.patients - 1 }}</h4>
+                    <h4 class="my-0">{{ stats.patients }}</h4>
                   </div>
                 </div>
               </div>

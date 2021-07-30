@@ -93,7 +93,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <h5 class="my-0 text-center">
-                      Daily Charts for Added patients
+                      Daily Added patients Chart
                     </h5>
                   </div>
                 </div>

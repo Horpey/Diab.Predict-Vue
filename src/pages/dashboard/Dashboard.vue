@@ -6,11 +6,17 @@
         <div class="content pt-3">
           <div class="row">
             <div class="col-md-6">
-              <h4 class="text-capitalize font-weight-bold mt-1">Diad.Predict</h4>
+              <h4 class="text-capitalize font-weight-bold mt-1">
+                Hello, {{ userData.firstname }}!
+              </h4>
             </div>
             <div class="col-md-6">
               <div class="text-right">
-                <button type="button" class="btn btn-theme" @click="patientModal = true">
+                <button
+                  type="button"
+                  class="btn btn-theme"
+                  @click="patientModal = true"
+                >
                   <span class="fa fa-user mr-2"></span>
                   Add Patient
                 </button>
@@ -40,7 +46,13 @@
       <form @submit.prevent="addPatient">
         <div class="form-group cardform">
           <label for="pName">Patient's Name</label>
-          <input type="text" id="pName" v-model="name" required class="form-control" />
+          <input
+            type="text"
+            id="pName"
+            v-model="name"
+            required
+            class="form-control"
+          />
         </div>
         <div class="row">
           <div class="col-md-6">
@@ -65,7 +77,7 @@
                 required
                 class="form-control"
                 id="gender"
-                style="height: 48px;"
+                style="height: 48px"
               >
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -76,14 +88,8 @@
 
         <div class="form-group mt-3">
           <button type="submit" :disabled="btndisable" class="btn btn-dark">
-            Add Patient
-            <img
-              v-if="rloading"
-              class="ml-2"
-              src="img/loaderlight.svg"
-              alt="logo"
-              height="20"
-            />
+            <span v-if="rloading">Loading...</span>
+            <span v-else>Add Patient</span>
           </button>
         </div>
       </form>
@@ -105,21 +111,26 @@ export default {
     home: Home,
     "fade-transition": FadeTransition,
     modal: Modal,
-    [DatePicker.name]: DatePicker
+    [DatePicker.name]: DatePicker,
   },
   data() {
     return {
       user: "",
       firstname: "",
       patientModal: false,
+      userData: {},
       name: "",
       gender: "",
       dob: "",
       btndisable: false,
-      rloading: false
+      rloading: false,
     };
   },
-  mounted() {},
+  mounted() {
+    if (localStorage.getItem("user")) {
+      this.userData = JSON.parse(localStorage.getItem("user")).user;
+    }
+  },
   methods: {
     logout() {
       this.$store.dispatch("logout").then(() => {
@@ -127,21 +138,17 @@ export default {
         this.$toast.info("Successfully logged out");
       });
     },
-
     addPatient() {
       this.btndisable = true;
       this.rloading = true;
       var moment = require("moment");
       this.dob = moment(this.dob).format("YYYY-MM-DD");
-      console.log(this.name);
-      console.log(this.gender);
-      console.log(this.dob);
       let name = this.name;
       let gender = this.gender;
       let dob = this.dob;
       this.$store
         .dispatch("addPatient", { name, gender, dob })
-        .then(resp => {
+        .then((resp) => {
           this.rloading = false;
           this.btndisable = false;
           this.name = "";
@@ -151,7 +158,7 @@ export default {
           this.$toast.success("Successfully added a patient!");
           location.reload();
         })
-        .catch(err => {
+        .catch((err) => {
           this.rloading = false;
           this.btndisable = false;
           if (err.response) {
@@ -164,8 +171,8 @@ export default {
             this.$toast.error("Unable to add patient, please try again");
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

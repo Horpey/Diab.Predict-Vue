@@ -10,7 +10,7 @@
             <div class="row">
               <div class="col-md-8">
                 <div class>
-                  <form class="form-inline">
+                  <!-- <form class="form-inline">
                     <div class="form-group">
                       <small id="helpId" class="mr-2">Sort by</small>
                       <label for></label>
@@ -30,12 +30,12 @@
                         <option value="nondiab">Non-Diabetes</option>
                       </select>
                     </div>
-                  </form>
+                  </form> -->
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="cardform">
-                  <input class="form-control" placeholder="Search Patient" />
+                  <input v-model="keyword" class="form-control" placeholder="Search Patient" />
                 </div>
               </div>
             </div>
@@ -55,7 +55,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(patient, index) in patients" :key="index">
+                <tr v-for="(patient, index) in filterResult" :key="index">
                   <td>{{index + 1}}</td>
                   <td>{{ formatData(patient.created_at) }}</td>
                   <td>{{patient.name}}</td>
@@ -104,20 +104,31 @@ export default {
   data() {
     return {
       loading: true,
-      patients: []
+      patients: [],
+      keyword: ''
     };
   },
+  computed: {
+    filterResult(){
+       return this.reorderByDate(
+         this.patients.filter((data) => {
+            return this.keyword.toLowerCase().split(' ').every(v => data.name.toLowerCase().includes(v));
+          })
+       );
+    }
+  },
   methods: {
+    reorderByDate(data){
+      return data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    },
     getPatients() {
       this.$store
         .dispatch("getPatients")
         .then(resp => {
           this.loading = false;
-          console.log(resp.data.data);
           this.patients = resp.data.data;
         })
         .catch(err => {
-          console.log(err);
           this.loading = false;
           this.$toast.info("Unable to load patients data, Try again!");
         });

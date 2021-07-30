@@ -1,11 +1,14 @@
 <template>
   <div class="page-header clear-filter" filter-color="dark">
-    <div class="page-header-image" style="background-image: url('img/lnd.jpg')"></div>
+    <div
+      class="page-header-image"
+      style="background-image: url('img/lnd.jpg')"
+    ></div>
     <div class="content">
       <div class="container">
         <div class="row">
           <div class="col-md-7">
-            <div class="text-left text-white" style="margin-top: 18%;">
+            <div class="text-left text-white" style="margin-top: 18%">
               <h1 class="mb-1">
                 Modern, Intelligent
                 <br />Diabetes Diagnosis Tool
@@ -30,58 +33,93 @@
                   <h5 class="trackcamp">Create Account</h5>
                   <div class="mt-4">
                     <form @submit.prevent="submitSignup">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group cardform">
-                          <label for="fname">First Name</label>
-                          <input v-model="firstname" type="text" id="fname" value class="form-control" />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group cardform">
+                            <label for="fname">First Name</label>
+                            <input
+                              v-model="firstname"
+                              type="text"
+                              id="fname"
+                              value
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group cardform">
+                            <label for="lname">Last Name</label>
+                            <input
+                              v-model="lastname"
+                              type="text"
+                              id="lname"
+                              value
+                              class="form-control"
+                            />
+                          </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-group cardform">
-                          <label for="lname">Last Name</label>
-                          <input v-model="lastname" type="text" id="lname" value class="form-control" />
+                      <div class="form-group cardform">
+                        <label for="email">Email address</label>
+                        <input
+                          v-model="email"
+                          type="email"
+                          id="email"
+                          value
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group cardform mt-1">
+                            <label for="password">Password</label>
+                            <input
+                              v-model="password"
+                              type="password"
+                              id="password"
+                              value
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group cardform mt-1">
+                            <label for="confirmPassword"
+                              >Confirm Password</label
+                            >
+                            <input
+                              v-model="password_confirmation"
+                              type="password"
+                              id="confirmPassword"
+                              value
+                              class="form-control"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="form-group cardform">
-                      <label for="email">Email address</label>
-                      <input v-model="email" type="email" id="email" value class="form-control" />
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group cardform mt-1">
-                          <label for="password">Password</label>
-                          <input v-model="password" type="password" id="password" value class="form-control" />
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group cardform mt-1">
-                          <label for="confirmPassword">Confirm Password</label>
-                          <input v-model="password_confirmation" type="password" id="confirmPassword" value class="form-control" />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group mt-3">
-                      <button :disabled="btndisable" type="submit" class="btn btn-cust btn-block">
-                        <span v-if="!rloading">Create Account</span>
-                        <img
-                          v-if="rloading"
+                      <div class="form-group mt-3">
+                        <button
+                          :disabled="btndisable"
+                          type="submit"
+                          class="btn btn-cust btn-block"
+                        >
+                          <span v-if="!rloading">Create Account</span>
+                          <img
+                            v-if="rloading"
                             class="ml-2"
                             src="img/loaderlight.svg"
                             alt="logo"
                             height="20"
-                          /></button>
-                    </div>
+                          />
+                        </button>
+                      </div>
                     </form>
                     <div class="small mt-4">
                       <p>
                         Already have an account?
-                        <a
-                          href="#"
-                          @click="login"
-                          class="text-theme"
-                        >Login here</a>
+                        <a href="#" @click="login" class="text-theme"
+                          >Login here</a
+                        >
                       </p>
                     </div>
                   </div>
@@ -92,39 +130,53 @@
                   <div class="mt-4">
                     <form @submit.prevent="submitLogin">
                       <div class="form-group cardform">
-                      <label for="email">Email address</label>
-                      <input type="email" id="email" v-model="email" value class="form-control" />
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group cardform mt-1">
-                          <label for="password">Password</label>
-                          <input type="password" v-model="password" id="password" value class="form-control" />
+                        <label for="email">Email address</label>
+                        <input
+                          type="email"
+                          id="email"
+                          v-model="email"
+                          value
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group cardform mt-1">
+                            <label for="password">Password</label>
+                            <input
+                              type="password"
+                              v-model="password"
+                              id="password"
+                              value
+                              class="form-control"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="form-group mt-3">
-                      <button type="submit" :disabled="btndisable" class="btn btn-cust btn-block">
-                        <span v-if="!rloading">Login</span>
-                        <img
-                          v-if="rloading"
+                      <div class="form-group mt-3">
+                        <button
+                          type="submit"
+                          :disabled="btndisable"
+                          class="btn btn-cust btn-block"
+                        >
+                          <span v-if="!rloading">Login</span>
+                          <img
+                            v-if="rloading"
                             class="ml-2"
                             src="img/loaderlight.svg"
                             alt="loading"
                             height="20"
                           />
-                      </button>
-                    </div>
+                        </button>
+                      </div>
                     </form>
                     <div class="small mt-4">
                       <p>
                         Don't have an account?
-                        <a
-                          href="#"
-                          @click="login"
-                          class="text-theme"
-                        >Create account</a>
+                        <a href="#" @click="login" class="text-theme"
+                          >Create account</a
+                        >
                       </p>
                     </div>
                   </div>
@@ -148,27 +200,27 @@ export default {
     Card,
     MainFooter,
     [Button.name]: Button,
-    [FormGroupInput.name]: FormGroupInput
+    [FormGroupInput.name]: FormGroupInput,
   },
   data() {
     return {
       loginCond: false,
       rloading: false,
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       btndisable: false,
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      password_confirmation: '',
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
     };
   },
   methods: {
     login() {
       this.loginCond = !this.loginCond;
     },
-    submitLogin(){
+    submitLogin() {
       if (this.email && this.password) {
         let email = this.email;
         let password = this.password;
@@ -178,73 +230,86 @@ export default {
           .dispatch("login", { email, password })
           .then((resp) => {
             this.rloading = false;
-            this.btndisable = false
-            this.$toast.success("Login Successful!")
-            this.$router.push("/dashboard");
+            this.btndisable = false;
+            this.$toast.success("Login Successful!");
+            setTimeout(() => {
+              this.$router.push("/dashboard");
+            }, 1000);
           })
-          .catch(err => {
+          .catch((err) => {
             this.rloading = false;
             this.btndisable = false;
-            if(err.response){
+            if (err.response) {
               // console.log(err.response.data)
-              if(err.response.data.status == 401){
-                this.$toast.error(err.response.data.message)
-              }else{
-                this.$toast.error("Unable to Login, please try again")
-              } 
-            }else{
-              this.$toast.error("Unable to Login, please try again")
+              if (err.response.data.status == 401) {
+                this.$toast.error(err.response.data.message);
+              } else {
+                this.$toast.error("Unable to Login, please try again");
+              }
+            } else {
+              this.$toast.error("Unable to Login, please try again");
             }
           });
       } else {
-        this.$toast.info("Kindly fill in all fields")
+        this.$toast.info("Kindly fill in all fields");
       }
     },
-    submitSignup(){
-      if(this.firstname && this.lastname && this.email && this.password && this.password_confirmation){
-        if(this.password == this.password_confirmation){
-          let firstname = this.firstname
-          let lastname = this.lastname
-          let email = this.email
-          let password = this.password
-          let password_confirmation = this.password_confirmation
+    submitSignup() {
+      if (
+        this.firstname &&
+        this.lastname &&
+        this.email &&
+        this.password &&
+        this.password_confirmation
+      ) {
+        if (this.password == this.password_confirmation) {
+          let firstname = this.firstname;
+          let lastname = this.lastname;
+          let email = this.email;
+          let password = this.password;
+          let password_confirmation = this.password_confirmation;
 
           this.rloading = true;
           this.btndisable = true;
 
           this.$store
-          .dispatch("signup", { firstname, lastname, email, password, password_confirmation })
-          .then((resp) => {
-            this.rloading = false;
-            this.btndisable = false
-            console.log(resp)
-            this.$toast.success("Account Created Successfully!");
-            this.$router.push("/dashboard");
-          })
-          .catch(err => {
-            this.rloading = false;
-            this.btndisable = false;
+            .dispatch("signup", {
+              firstname,
+              lastname,
+              email,
+              password,
+              password_confirmation,
+            })
+            .then((resp) => {
+              this.rloading = false;
+              this.btndisable = false;
+              this.$toast.success("Account Created Successfully!");
+              setTimeout(() => {
+                this.$router.push("/dashboard");
+              }, 1000);
+            })
+            .catch((err) => {
+              this.rloading = false;
+              this.btndisable = false;
 
-            if(err.response){
-              // console.log(err.response.data)
-              if(err.response.data.status == 422){
-                this.$toast.error(err.response.data.data.email[0])
-              }else{
-                this.$toast.error("Account creation failed, Try again!")
-              } 
-            }else{
-              this.$toast.error("Account creation failed, Try again!")
-            }
-
-          });
-
-        }else{
-          this.$toast.info("Password does not match, Try again")
+              if (err.response) {
+                // console.log(err.response.data)
+                if (err.response.data.status == 422) {
+                  this.$toast.error(err.response.data.data.email[0]);
+                } else {
+                  this.$toast.error("Account creation failed, Try again!");
+                }
+              } else {
+                this.$toast.error("Account creation failed, Try again!");
+              }
+            });
+        } else {
+          this.$toast.info("Password does not match, Try again");
         }
-      }else{
-        this.$toast.info("Kindly fill in all fields")
+      } else {
+        this.$toast.info("Kindly fill in all fields");
       }
-    }
+    },
   },
 };
 </script>

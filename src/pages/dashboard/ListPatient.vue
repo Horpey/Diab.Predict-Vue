@@ -8,7 +8,10 @@
               <div class="card-body mx-3 my-2">
                 <div class="mb-4">
                   <a href="#" @click="$router.back()" class="text-dark">
-                    <span class="fa fa-arrow-left mr-2" style="font-size: 14px;"></span>
+                    <span
+                      class="fa fa-arrow-left mr-2"
+                      style="font-size: 14px"
+                    ></span>
                     <span class="pt-1">Back</span>
                   </a>
                 </div>
@@ -18,23 +21,33 @@
                 <div v-else>
                   <p class="mb-2">
                     <span class="fa fa-calendar mr-2"></span>
-                    {{formatDate(patientData.created_at)}}
+                    {{ formatDate(patientData.created_at) }}
                   </p>
-                  <h3 class="text-capitalize font-weight-bold mb-0">{{patientData.name}}</h3>
-                  <p class="font-weight-bold">{{patientData.gender}}</p>
-                  <p>{{getAge(patientData.dob)}}</p>
-                  <p>
+                  <h3 class="text-capitalize font-weight-bold mb-0">
+                    {{ patientData.name }}
+                  </h3>
+                  <p class="font-weight-bold">{{ patientData.gender }}</p>
+                  <p>{{ getAge(patientData.dob) }}</p>
+                  <p v-if="patientData.diagnosis">
                     <span class="badge badge-danger text-capitalize">
                       <span
-                        :class="{fa:true,'mr-2':true, 'fa-plus':getStatus(patientData.diagnosis) == 'positive',  'fa-minus':getStatus(patientData.diagnosis) == 'negative'}"
+                        :class="{
+                          fa: true,
+                          'mr-2': true,
+                          'fa-plus':
+                            getStatus(patientData.diagnosis) == 'positive',
+                          'fa-minus':
+                            getStatus(patientData.diagnosis) == 'negative',
+                        }"
                       ></span>
-                      {{getStatus(patientData.diagnosis)}}
+                      {{ getStatus(patientData.diagnosis) }}
                     </span>
 
                     <span
                       v-if="getStatus(patientData.diagnosis) == 'positive'"
                       class="badge badge-info text-capitalize"
-                    >{{getType(patientData.diagnosis)}}</span>
+                      >{{ getType(patientData.diagnosis) }}</span
+                    >
                   </p>
                 </div>
               </div>
@@ -54,7 +67,7 @@
                         <td>Fasting or before breakfast</td>
                         <td class="text-info">
                           <span v-if="patientData.diagnosis">
-                            {{patientData.diagnosis.blood_sugar_before}}
+                            {{ patientData.diagnosis.blood_sugar_before }}
                             mg/dl
                           </span>
                         </td>
@@ -62,25 +75,34 @@
                       <tr>
                         <td>2 hours after meal</td>
                         <td class="text-danger">
-                          <span
-                            v-if="patientData.diagnosis"
-                          >{{patientData.diagnosis.blood_sugar_after}} mg/dl</span>
+                          <span v-if="patientData.diagnosis"
+                            >{{
+                              patientData.diagnosis.blood_sugar_after
+                            }}
+                            mg/dl</span
+                          >
                         </td>
                       </tr>
                       <tr>
                         <td>Plasma Glucose (any Time)</td>
                         <td class="text-info">
-                          <span
-                            v-if="patientData.diagnosis"
-                          >{{patientData.diagnosis.plasma_glucose}} mmol/L</span>
+                          <span v-if="patientData.diagnosis"
+                            >{{
+                              patientData.diagnosis.plasma_glucose
+                            }}
+                            mmol/L</span
+                          >
                         </td>
                       </tr>
                       <tr>
                         <td>Plasma Glucose (Morning)</td>
                         <td class="text-danger">
-                          <span
-                            v-if="patientData.diagnosis"
-                          >{{patientData.diagnosis.plasma_glucose_morning}} mmol/L</span>
+                          <span v-if="patientData.diagnosis"
+                            >{{
+                              patientData.diagnosis.plasma_glucose_morning
+                            }}
+                            mmol/L</span
+                          >
                         </td>
                       </tr>
                     </tbody>
@@ -91,25 +113,45 @@
                       <tr>
                         <th class="text-info">Diabetic Status</th>
                         <th>
-                          <span class="text-capitalize">{{getStatus(patientData.diagnosis)}}</span>
+                          <span class="text-capitalize">{{
+                            getStatus(patientData.diagnosis)
+                          }}</span>
                         </th>
                       </tr>
                       <tr>
                         <th class="text-info">Diabetic Type</th>
                         <th>
-                          <span class="text-capitalize">{{getType(patientData.diagnosis)}}</span>
+                          <span class="text-capitalize">{{
+                            getType(patientData.diagnosis)
+                          }}</span>
                         </th>
                       </tr>
                     </tbody>
                   </table>
-                  <div class="text-right">
-                    <!-- <a href="#" class="btn btn-dark">
-                                                        <span class="fa fa-save mr-2"></span>
-                    Save</a>-->
-                    <a href="#" class="btn btn-outline-primary text-dark">
+                  <div v-if="patientData.diagnosis" class="recommendation">
+                    <p class="title">Recommendations</p>
+                    <p v-if="getStatus(patientData.diagnosis) == 'negative'">You can keep your self more immune from Diabetes by following the following tips</p>
+                    <p v-else>
+                      Stay Calm! the situation can be managed. You can increase your chances of being Diabetic free by observing the following tips:
+                    </p>
+                    <ul>
+                      <li v-for="(tip,index) in (getStatus(patientData.diagnosis) == 'negative' ? negativeTips : positiveTips)" :key="index">
+                        <p>{{tip}}</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="text-right mt-3">
+                    <a v-if="patientData.diagnosis" href="#" class="btn btn-outline-primary text-dark">
                       <span class="fa fa-file-download mr-2"></span>
                       Download Report
                     </a>
+                    <router-link
+                      v-else 
+                      :to="{path: '/dashboard/diagnose/' + patientData.uuid, query: {dob: patientData.dob}}"
+                      class="btn btn-dark"
+                    >
+                      <span class="small font-weight-bold">Diagnose</span>
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -129,7 +171,23 @@ export default {
   data() {
     return {
       loading: true,
-      patientData: {}
+      patientData: {},
+      negativeTips: [
+        'Lose Extra weight and get a doctor, dietician and a fitness trainer',
+        'Check your blood sugar level at least twice a day',
+        'Track your carbohydrates',
+        'Control your blood pressure, and cholesterol',
+        'Get more exercise',
+        'When you are sleep deprived, you tend to eat more. Get enough sleep',
+        'Do a complete checkup at least once every year'
+      ],
+      positiveTips: [
+        'Check your blood sugar level at least once a day',
+        'Track your carbohydrates',
+        'Get more exercise',
+        'When you are sleep deprived, you tend to eat more. Get enough sleep',
+        'Do a complete checkup at least once every year'
+      ]
     };
   },
   methods: {
@@ -142,35 +200,48 @@ export default {
       return formatted;
     },
     getStatus(diagnose) {
-      if (diagnose.result) {
-        return diagnose.result.status;
-      } else {
-        return "";
+      if (diagnose) {
+        if (diagnose.result) {
+          return diagnose.result.status;
+        } else {
+          return "";
+        }
       }
     },
     getType(diagnose) {
-      if (diagnose.result) {
-        return diagnose.result.type;
-      } else {
-        return "";
+      if (diagnose) {
+        if (diagnose.result) {
+          return diagnose.result.type;
+        } else {
+          return "";
+        }
       }
-    }
+    },
   },
   mounted() {
     let id = this.$route.params.id;
     this.$store
       .dispatch("sendPatientData", id)
-      .then(resp => {
+      .then((resp) => {
         console.log(resp.data.data);
         this.patientData = resp.data.data;
         this.loading = false;
       })
-      .catch(err => {
+      .catch((err) => {
         this.loading = false;
       });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
 @import "../../assets/scss/dashboard/index.scss";
+.recommendation{
+    background: #f1f1f1;
+    padding: 22px 24px;
+    border: 1px dashed darkgray;
+    .title{
+      font-weight: bold;
+      padding: 0px;
+    }
+}
 </style>

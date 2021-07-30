@@ -18,12 +18,12 @@
                   <div class="media-body ml-3">
                     <h5 class="m-0">{{user.firstname}} {{user.lastname}}</h5>
                     <p class="mb-1">{{user.email}}</p>
-                    <button
+                    <!-- <button
                       type="button"
                       data-toggle="modal"
                       data-target="#editProfile"
                       class="btn btn-sm btn-dark"
-                    >Edit Profile</button>
+                    >Edit Profile</button> -->
                   </div>
                 </div>
               </div>
@@ -75,7 +75,6 @@ export default {
   },
   mounted(){
     this.user = JSON.parse(localStorage.getItem('user')).user;
-    console.log(this.user)
   },
   methods: {}
 };

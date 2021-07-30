@@ -9,6 +9,16 @@ import Axios from 'axios';
 import Toast from "vue-toastification";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
+import ECharts from "vue-echarts";
+import { use } from "echarts/core";
+// import ECharts modules manually to reduce bundle size
+import { CanvasRenderer } from "echarts/renderers";
+import { BarChart } from "echarts/charts";
+import { GridComponent, TooltipComponent } from "echarts/components";
+import { PieChart } from "echarts/charts";
+import { LegendComponent } from "echarts/components";
+import { LineChart } from "echarts/charts";
+import { TitleComponent } from "echarts/components";
 
 const options = {
   // You can set your default options here
@@ -23,7 +33,18 @@ const token = localStorage.getItem('token');
 if (token) {
   Vue.prototype.$http.defaults.headers.common['Authorization'] = token;
 }
-Vue.use(Vuex)
+Vue.use(Vuex);
+use([
+  CanvasRenderer,
+  BarChart,
+  GridComponent,
+  TooltipComponent,
+  PieChart,
+  LegendComponent,
+  LineChart,
+  TitleComponent,
+]);
+Vue.component("v-chart", ECharts);
 
 
 Vue.use(NowUiKit);

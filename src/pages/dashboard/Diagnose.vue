@@ -236,7 +236,7 @@ export default {
             this.reportData.ds = "positive";
             this.reportData.dt = resp.data.prediction;
           }
-          console.log(this.reportData);
+          // console.log(this.reportData);
           this.sendtoDB();
         })
         .catch(err => {

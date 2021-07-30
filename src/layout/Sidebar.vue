@@ -31,10 +31,10 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/dashboard/support" class="campaignlist">
+            <a href="mailto:adeniran.opeyemi.ao@gmail.com" target="_blank" class="campaignlist">
               <span class="fa fa-question-circle"></span>
               <p>Support</p>
-            </router-link>
+            </a>
           </li>
 
           <li class="active-pro">

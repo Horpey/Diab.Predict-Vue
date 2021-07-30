@@ -139,6 +139,27 @@ export const actions = {
         });
     });
   },
+  loadChartData({
+    commit
+  }) {
+    return new Promise((resolve, reject) => {
+      let userToken = localStorage.getItem('token');
+      axios({
+          url: baseURL + '/chart-data',
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + userToken
+          }
+        })
+        .then(resp => {
+          resolve(resp);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  },
   senttoDB({
     commit,
   }, reportdata) {
